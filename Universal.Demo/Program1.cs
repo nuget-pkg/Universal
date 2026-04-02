@@ -9,6 +9,7 @@ public static class Program1
     {
         try
         {
+            SetupConsoleEncoding();
             DebugOutput = true;
             string fname =
                 """[1080p]✅👀🫧💻🌐`within backticks`<xml>aaa</xml>;{Title}!?x=(11+22-33)*11/2;,(🔥引火帝国🔥):"name1"'name2'?.txt""";
@@ -54,12 +55,11 @@ public static class Program1
             Log(restoredCode1, "restoredCode1");
             //Log(restoredCode2, "restoredCode2");
             //Log(restoredCode3, "restoredCode3");
-            if (false)
-            {
-                string sample = System.IO.File.ReadAllText(GitProjectFile(GetCwd(), "UniversalEncoding.Demo", "assets", "sample.txt")!);
-                string escaped = UniversalTransformer.UnicodeEscape(sample);
-                Log(escaped, "escaped");
-            }
+
+            //string xxx = UniversalTransformer.SafeSourceCode("𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩💞𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵");
+            string xxx = UniversalTransformer.SafeSourceCode("𝓃𝓅");
+            Log(xxx);
+            Echo(" \uD835\uDCC4 \uD835\uDCC4");
         }
         catch (System.Exception ex)
         {
