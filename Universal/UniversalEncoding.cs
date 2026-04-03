@@ -24,6 +24,14 @@ public class UniversalEncoding
         Log(byteUtf32.Length, title: "byteUtf32.Length");
         return byteUtf32;
     }
+    // 4バイト(byte)を1つの数値(uint)として読み替える
+    public static uint[] ToCodePoints(string s)
+    {
+        byte[] bytes = ParseStringIntoUtf32Characters(s);
+        uint[] codePoints = new uint[bytes.Length / 4];
+        Buffer.BlockCopy(bytes, 0, codePoints, 0, bytes.Length);
+        return codePoints;
+    }
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
     {
         UTF32Encoding enc = new UTF32Encoding();
