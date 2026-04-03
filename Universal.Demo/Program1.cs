@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Runtime;
 using System.Text;
 namespace Universal.Demo;
@@ -14,6 +15,11 @@ public static class Program1
         {
             SetupConsoleEncoding();
             DebugOutput = true;
+
+            var exploded = UniversalEncoding.ToCodePoints("𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩 𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃");
+            Log(exploded, title: "Code points of the string");
+            return;
+
             string fname =
                 """[1080p]✅👀🫧💻🌐`within backticks`<xml>aaa</xml>;{Title}!?x=(11+22-33)*11/2;,(🔥引火帝国🔥):"name1"'name2'?.txt""";
             Log(UniversalTransformer.SafeFileName(fname, prettyQuotesPairs: true),

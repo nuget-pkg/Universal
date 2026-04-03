@@ -32,6 +32,7 @@ public class UniversalEncoding
         Buffer.BlockCopy(bytes, 0, codePoints, 0, bytes.Length);
         return codePoints;
     }
+#if false
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
     {
         UTF32Encoding enc = new UTF32Encoding();
@@ -45,5 +46,28 @@ public class UniversalEncoding
         string decodedString = enc.GetString(byteUtf32);
         return decodedString + ellipsis;
     }
+#else
+    public static string LimitStringLength(string s, int limit, string ellipsis = "...")
+    {
+        if (string.IsNullOrEmpty(s)) return s;
+        // 1. 文字列をコードポイント(uint)の配列に変換
+        // これにより、絵文字や特殊記号も「1つの要素」として扱える
+        uint[] codePoints = ToCodePoints(s);
+        // 2. 指定された制限文字数以内ならそのまま返す
+        if (codePoints.Length <= limit)
+        {
+            return s;
+        }
+        // 3. 制限文字数分だけを切り出す（Slice）
+        // 1文字4バイト固定なので、ここでは単なる配列のインデックス操作
+        uint[] truncatedPoints = new uint[limit];
+        Array.Copy(codePoints, 0, truncatedPoints, 0, limit);
 
+        // 4. 再び文字列(UTF-16)に戻して、省略記号を付与
+        byte[] truncatedBytes = new byte[limit * 4];
+        Buffer.BlockCopy(truncatedPoints, 0, truncatedBytes, 0, truncatedBytes.Length);
+        UTF32Encoding enc = new UTF32Encoding();
+        return enc.GetString(truncatedBytes) + ellipsis;
+    }
+#endif
 }
