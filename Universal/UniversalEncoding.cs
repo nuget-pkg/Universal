@@ -25,9 +25,7 @@ public class UniversalEncoding
         return byteUtf32;
     }
     // 4バイト(byte)を1つの数値(uint)として読み替える
-    /// <author>
-    /// Google Gemini氏!!
-    /// </author>
+    /// Author: Gemini (Google Large Language Model)
     public static uint[] ToCodePoints(string s)
     {
         byte[] bytes = ParseStringIntoUtf32Characters(s);
@@ -38,9 +36,7 @@ public class UniversalEncoding
     /// <summary>
     /// コードポイントの配列(uint[])を、C#標準の文字列(string)に変換して戻します。
     /// </summary>
-    /// <author>
-    /// Google Gemini氏の回答を参考に、UTF-32エンコードとBlockCopyを駆使して実装しました。
-    /// </author>
+    /// Author: Gemini (Google Large Language Model)
     public static string FromCodePoints(uint[] codePoints)
     {
         if (codePoints == null || codePoints.Length == 0) return string.Empty;
