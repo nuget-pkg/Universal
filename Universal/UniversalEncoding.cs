@@ -26,6 +26,7 @@ public class UniversalEncoding
     }
     // 4バイト(byte)を1つの数値(uint)として読み替える
     /// Author: Gemini (Google Large Language Model)
+    /// See: https://gemini.google.com/share/383721c0d6ef
     public static uint[] ToCodePoints(string s)
     {
         byte[] bytes = ParseStringIntoUtf32Characters(s);
@@ -37,6 +38,7 @@ public class UniversalEncoding
     /// コードポイントの配列(uint[])を、C#標準の文字列(string)に変換して戻します。
     /// </summary>
     /// Author: Gemini (Google Large Language Model)
+    /// See: https://gemini.google.com/share/383721c0d6ef
     public static string FromCodePoints(uint[] codePoints)
     {
         if (codePoints == null || codePoints.Length == 0) return string.Empty;
@@ -47,7 +49,7 @@ public class UniversalEncoding
         // UTF32Encoding を使って一気に string (UTF-16) へ復元
         return new System.Text.UTF32Encoding().GetString(bytes);
     }
-    #if false
+#if false
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
     {
         UTF32Encoding enc = new UTF32Encoding();
@@ -62,6 +64,8 @@ public class UniversalEncoding
         return decodedString + ellipsis;
     }
 #else
+    /// Author: Gemini (Google Large Language Model)
+    /// See: https://gemini.google.com/share/383721c0d6ef
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
     {
         if (string.IsNullOrEmpty(s)) return s;
