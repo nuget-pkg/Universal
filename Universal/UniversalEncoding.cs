@@ -25,6 +25,9 @@ public class UniversalEncoding
         return byteUtf32;
     }
     // 4バイト(byte)を1つの数値(uint)として読み替える
+    /// <author>
+    /// Google Gemini氏!!
+    /// </author>
     public static uint[] ToCodePoints(string s)
     {
         byte[] bytes = ParseStringIntoUtf32Characters(s);
@@ -32,7 +35,23 @@ public class UniversalEncoding
         Buffer.BlockCopy(bytes, 0, codePoints, 0, bytes.Length);
         return codePoints;
     }
-#if false
+    /// <summary>
+    /// コードポイントの配列(uint[])を、C#標準の文字列(string)に変換して戻します。
+    /// </summary>
+    /// <author>
+    /// Google Gemini氏の回答を参考に、UTF-32エンコードとBlockCopyを駆使して実装しました。
+    /// </author>
+    public static string FromCodePoints(uint[] codePoints)
+    {
+        if (codePoints == null || codePoints.Length == 0) return string.Empty;
+        // uint[] (1要素4バイト) を byte[] に変換するためのバッファ確保
+        byte[] bytes = new byte[codePoints.Length * 4];
+        // メモリブロックを高速コピー
+        Buffer.BlockCopy(codePoints, 0, bytes, 0, bytes.Length);
+        // UTF32Encoding を使って一気に string (UTF-16) へ復元
+        return new System.Text.UTF32Encoding().GetString(bytes);
+    }
+    #if false
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
     {
         UTF32Encoding enc = new UTF32Encoding();

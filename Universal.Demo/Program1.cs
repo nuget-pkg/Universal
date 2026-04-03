@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Runtime;
 using System.Text;
 namespace Universal.Demo;
@@ -15,6 +16,17 @@ public static class Program1
         {
             SetupConsoleEncoding();
             DebugOutput = true;
+
+            // 1. 文字列を爆破（Code Point化）
+            var codePoints = UniversalEncoding.ToCodePoints("𝓐𝓑𝓒 123 𝔁𝔂𝔃");
+            // 2. 加工（例：LINQで数字だけを除去してみる）
+            // 48～57 が ASCII の '0'～'9' です
+            var filteredPoints = codePoints.Where(cp => cp < 48 || cp > 57).ToArray();
+            // 3. 復元（再び string へ）
+            string result = UniversalEncoding.FromCodePoints(filteredPoints);
+            Log(result, title: "数字を除去して復元した結果");
+            // 出力期待値: "𝓐𝓑𝓒  𝔁𝔂𝔃" (サロゲートペアも壊れずに残る！)
+            return;
 
             var exploded = UniversalEncoding.ToCodePoints("𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩 𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃");
             Log(exploded, title: "Code points of the string");
