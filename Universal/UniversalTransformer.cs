@@ -48,12 +48,50 @@ public static class UniversalTransformer
         '❝',
         '❞',
     ];
-
-    public static int Add2(int a, int b)
+    public static string GeminiSuperSerifBoldItalicTransform(string text, bool autoUpcase = false)
     {
-        return a + b;
+        uint _CPOC_(char c)
+        {
+            return UniversalEncoding.CodePointOfCharacter(c);
+        }
+        // This is a placeholder for a function that would convert text to a super serif bold italic style.
+        // The actual implementation would depend on the specific Unicode characters used for this style.
+        // For demonstration purposes, we'll just return the original text.
+        Dictionary<uint, string> conversionMap = new Dictionary<uint, string>
+        {
+            // Serif Bold Italic: 𝑨 𝑩 𝑪 𝑫 𝑬 𝑭 𝑮 𝑯 𝑰 𝑱 𝑲 𝑳 𝑴 𝑵 𝑶 𝑷 𝑸 𝑹 𝑺 𝑻 𝑼 𝑽 𝑾 𝑿 𝒀 𝒁
+            {_CPOC_('A'), "𝑨"}, {_CPOC_('B'), "𝑩" }, {_CPOC_('C'), "𝑪"}, {_CPOC_('D'), "𝑫"}, {_CPOC_('E'), "𝑬"},
+            {_CPOC_('F'), "𝑭"}, {_CPOC_('G'), "𝑮"}, {_CPOC_('H'), "𝑯"}, {_CPOC_('I'), "𝑰"}, {_CPOC_('J'), "𝑱"},
+            {_CPOC_('K'), "𝑲"}, {_CPOC_('L'), "𝑳" }, {_CPOC_('M'), "𝑴"}, {_CPOC_('N'), "𝑵"}, {_CPOC_('O'), "𝑶"},
+            {_CPOC_('P'), "𝑷"}, {_CPOC_('Q'), "𝑸"}, {_CPOC_('R'), "𝑹"}, {_CPOC_('S'), "𝑺"}, {_CPOC_('T'), "𝑻"},
+            {_CPOC_('U'), "𝑼"}, {_CPOC_('V'), "𝑽"}, {_CPOC_('W'), "𝑾"}, {_CPOC_('X'), "𝑿" }, {_CPOC_('Y'), "𝒀" },
+            {_CPOC_('Z'), "𝒁"},
+            // Serif Bold Italic: 𝒂 𝒃 𝒄 𝒅 𝒆 𝒇 𝒈 𝒉 𝒊 𝒋 𝒌 𝒍 𝒎 𝒏 𝒐 𝒑 𝒒 𝒓 𝒔 𝒕 𝒖 𝒗 𝒘 𝒙 𝒚 𝒛
+            {_CPOC_('a'), "𝒂"}, {_CPOC_('b'), "𝒃" }, {_CPOC_('c'), "𝒄"}, {_CPOC_('d'), "𝒅"}, {_CPOC_('e'), "𝒆"},
+            {_CPOC_('f'), "𝒇"}, {_CPOC_('g'), "𝒈"}, {_CPOC_('h'), "𝒉"}, {_CPOC_('i'), "𝒊"}, {_CPOC_('j'), "𝒋"},
+            {_CPOC_('k'), "𝒌"}, {_CPOC_('l'), "𝒍" }, {_CPOC_('m'), "𝒎"}, {_CPOC_('n'), "𝒏"}, {_CPOC_('o'), "𝒐"},
+            {_CPOC_('p'), "𝒑"}, {_CPOC_('q'), "𝒒"}, {_CPOC_('r'), "𝒓"}, {_CPOC_('s'), "𝒔"}, {_CPOC_('t'), "𝒕"},
+            {_CPOC_('u'), "𝒖"}, {_CPOC_('v'), "𝒗"}, {_CPOC_('w'), "𝒘"}, {_CPOC_('x'), "𝒙" }, {_CPOC_('y'), "𝒚" },
+            {_CPOC_('z'), "𝒛"}
+        };
+        if (autoUpcase) text = text.ToUpper();
+        uint[] codePoints = UniversalEncoding.ToCodePoints(text);
+        List<string> convertedCharacters = new List<string>();
+        for (int i = 0; i < codePoints.Length; i++)
+        {
+            uint codePoint = codePoints[i];
+            if (conversionMap.ContainsKey(codePoint))
+            {
+                convertedCharacters.Add(conversionMap[codePoint]);
+            }
+            else
+            {
+                convertedCharacters.Add(UniversalEncoding.FromCodePoints([codePoint]));
+            }
+        }
+        text = string.Join("", convertedCharacters);
+        return text;
     }
-
     public static bool UnicodeEscapeIsNeeded(char c, bool everything = false)
     {
         if (everything) return (c > 127);

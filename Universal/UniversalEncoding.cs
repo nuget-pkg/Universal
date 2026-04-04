@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using static Core.CoreObject;
+////using static Core.CoreObject;
 
 namespace Universal;
 
@@ -21,7 +21,7 @@ public class UniversalEncoding
     {
         UTF32Encoding enc = new UTF32Encoding();
         byte[] byteUtf32 = enc.GetBytes(s);
-        Log(byteUtf32.Length, title: "byteUtf32.Length");
+        ////Log(byteUtf32.Length, title: "byteUtf32.Length");
         return byteUtf32;
     }
     // 4バイト(byte)を1つの数値(uint)として読み替える
@@ -33,6 +33,13 @@ public class UniversalEncoding
         uint[] codePoints = new uint[bytes.Length / 4];
         Buffer.BlockCopy(bytes, 0, codePoints, 0, bytes.Length);
         return codePoints;
+    }
+    /// Author: Gemini (Google Large Language Model)
+    /// See: https://gemini.google.com/share/383721c0d6ef
+    public static uint CodePointOfCharacter(char c)
+    {
+        var array = ToCodePoints($"{c}");
+        return array[0];
     }
     /// <summary>
     /// コードポイントの配列(uint[])を、C#標準の文字列(string)に変換して戻します。
@@ -49,21 +56,6 @@ public class UniversalEncoding
         // UTF32Encoding を使って一気に string (UTF-16) へ復元
         return new System.Text.UTF32Encoding().GetString(bytes);
     }
-#if false
-    public static string LimitStringLength(string s, int limit, string ellipsis = "...")
-    {
-        UTF32Encoding enc = new UTF32Encoding();
-        byte[] byteUtf32 = enc.GetBytes(s);
-        if (byteUtf32.Length <= limit * 4)
-        {
-            return s;
-        }
-        ArraySegment<byte> segment = new ArraySegment<byte>(byteUtf32, 0, limit * 4);
-        byteUtf32 = segment.ToArray();
-        string decodedString = enc.GetString(byteUtf32);
-        return decodedString + ellipsis;
-    }
-#else
     /// Author: Gemini (Google Large Language Model)
     /// See: https://gemini.google.com/share/383721c0d6ef
     public static string LimitStringLength(string s, int limit, string ellipsis = "...")
@@ -88,5 +80,4 @@ public class UniversalEncoding
         UTF32Encoding enc = new UTF32Encoding();
         return enc.GetString(truncatedBytes) + ellipsis;
     }
-#endif
 }

@@ -17,6 +17,13 @@ public static class Program1
             SetupConsoleEncoding();
             DebugOutput = true;
 
+            //⁅記号⁆◉▶▸⸝↪️ ↩️ ℴ𝓬➺➢ᰔ  ヾ➠✅🈂️❓❗＼／：＊“≪≫￤；‘｀＃％＄＆＾～￤﴾﴿⁅⁆【】≪≫＋ー＊＝⚽ 𝑪𝒉𝒆𝒄𝒌 🌐🪩
+            string original = "🌐Hello, World!?🌐⁅EMOJI⁆◉▶▸⸝↪️↩️➠✅🈂️❓❗𝑪𝒉𝒆𝒄𝒌";
+            string transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original);
+            Log(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果");
+            transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original,autoUpcase: true);
+            Log(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果 (全大文字化)");
+
             // 1. 文字列を爆破（Code Point化）
             var codePoints = UniversalEncoding.ToCodePoints("𝓐𝓑𝓒 123 𝔁𝔂𝔃");
             // 2. 加工（例：LINQで数字だけを除去してみる）
