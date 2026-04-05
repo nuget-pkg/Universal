@@ -83,6 +83,10 @@ namespace Universal
 #endif
         }
 
+        public static string FromSingleCodePoint(uint codePoint)
+        {
+            return FromCodePoints([codePoint]);
+        }
 #if NET8_0_OR_GREATER
         private static int GetUtf16Length(uint[] codePoints)
         {
