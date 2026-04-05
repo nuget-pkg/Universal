@@ -399,7 +399,145 @@ namespace Universal;
 
             return metadata;
         }
-        public static List<char> SpecialCharcters = [
+    //public static string? GeminiSuperAllPurposeEmojifier(string sampleChar, string target)
+    //{
+    //    // 引数の sampleChar（"𝒜" や "𝔸" など）のコードポイントを見てスタイルを判定
+    //    var style = DetermineStyleFromSample(sampleChar);
+
+    //    // あとは判定されたスタイルで変換を実行！
+    //    //return Transform(target, style);
+    //    return null;
+    //}
+
+    private static TextStyle DetermineStyleFromSample(string sample)
+    {
+        if (string.IsNullOrEmpty(sample)) return TextStyle.Default;
+
+        // 最初の1文字（サロゲートペア考慮）のコードポイントを取得
+        int codePoint = char.ConvertToUtf32(sample, 0);
+
+        // 各スタイルの開始地点（'A' の位置）と比較して判定
+        return codePoint switch
+        {
+            >= 0x1D49C and <= 0x1D4B5 => TextStyle.Script,       // 𝒜...
+            >= 0x1D538 and <= 0x1D551 => TextStyle.DoubleStruck, // 𝔸...
+            >= 0x1D670 and <= 0x1D689 => TextStyle.Monospace,    // 𝙰...
+                                                                 // ... 他の判定ロジック
+            _ => TextStyle.Default
+        };
+    }
+    // Enumを使わず、直接「開始地点のコードポイント」を返すストレートな設計案
+    private static int GetOffsetFromSample(string sample)
+    {
+        if (string.IsNullOrEmpty(sample)) return 0;
+        return char.ConvertToUtf32(sample, 0); // "𝒜" を渡せば 0x1D49C が返る
+    }
+
+    /// <summary>
+    /// 🌈 サンプル文字（𝒩 や ℕ など）を一つ渡すだけで、文字列全体をそのスタイルに染め上げます。
+    /// </summary>
+    /// <param name="sampleChar">スタイルの基準となる文字（例: "𝒜", "𝔸", "𝙰"）</param>
+    /// <param name="target">変換したい英数字テキスト</param>
+    /// <returns>変貌を遂げたテキスト</returns>
+    public static string GeminiSuperAllPurposeEmojifier(string sampleChar, string target)
+    {
+        if (string.IsNullOrEmpty(target)) return target;
+
+        // サンプルから「'A' がそのスタイルで何番のコードポイントか」を取得
+        int offsetA = GetBaseCodePoint(sampleChar, true);
+        int offsetSmallA = GetBaseCodePoint(sampleChar, false);
+
+        if (offsetA == 0) return target; // 判定不能ならそのまま返す
+
+        var sb = new StringBuilder(target.Length * 2);
+        foreach (var c in target)
+        {
+            if (c >= 'A' && c <= 'Z')
+            {
+                int cp = offsetA + (c - 'A');
+                // Script体などの「Unicodeの穴」を修正（必要に応じて拡張）
+                cp = FixUnicodeGap(cp);
+                sb.Append(char.ConvertFromUtf32(cp));
+            }
+            else if (c >= 'a' && c <= 'z')
+            {
+                int cp = offsetSmallA + (c - 'a');
+                cp = FixUnicodeGap(cp);
+                sb.Append(char.ConvertFromUtf32(cp));
+            }
+            else
+            {
+                sb.Append(c);
+            }
+        }
+        return sb.ToString();
+    }
+
+    private static int GetBaseCodePoint(string sample, bool isUpper)
+    {
+        if (string.IsNullOrEmpty(sample)) return 0;
+        int cp = char.ConvertToUtf32(sample, 0);
+
+        // 与えられた文字がどのレンジに属するか判定し、そのスタイルの 'A' または 'a' の起点を返す
+        if (cp >= 0x1D400 && cp <= 0x1D7FF) // Mathematical Alphanumeric Symbols 領域
+        {
+            // スタイルごとのブロックサイズは 26(英字) または 52(大文字+小文字)
+            // 簡易的に「今の文字から A(0x41) または a(0x61) の距離を引く」
+            // ただし、サンプルが小文字の場合もあるので調整が必要
+            if (cp >= 0x1D400 && cp <= 0x1D6A5) // 英字セクション
+            {
+                // 大文字ならそのスタイルの開始点、小文字なら対応する大文字の開始点を推測
+                // 多くのスタイルは 大文字(26個) -> 小文字(26個) の順で並んでいます
+                // 1D468 (A) -> 1D482 (a) の差は 0x1A (26)
+                // ここでは単純化のため、サンプルの文字種に関わらず大文字起点を計算
+                bool sampleIsUpper = (cp - 0x1D400) % 52 < 26; // ざっくりとした判定
+
+                // 汎用的なオフセット計算（非常に洗練された方法）
+                // ※実際には TextStyle Enum と dictionary で管理するのが安全ですが、
+                // 「サンプル文字から盗む」というコンセプトなら以下の計算がクールです。
+                return isUpper ?
+                    (cp - (sampleIsUpper ? 0 : 26)) : // Aの地点
+                    (cp + (sampleIsUpper ? 26 : 0));  // aの地点
+            }
+        }
+        return 0;
+    }
+
+    private static int FixUnicodeGap(int cp)
+    {
+        // 𝑩, ℰ, ℱ などの特殊な「穴」を埋めるためのマッピング
+        // 数学記号領域では一部が既存の BMP 領域（U+2100台）に飛ばされています
+        return cp switch
+        {
+            0x1D472 => 0x210E, // h (Plancks constant)
+            0x1D49C => 0x212C, // B (Script)
+            0x1D49E => 0x2130, // E (Script)
+            0x1D49F => 0x2131, // F (Script)
+            0x1D4A2 => 0x210B, // H (Script)
+            0x1D4A5 => 0x2110, // I (Script)
+            0x1D4A6 => 0x2112, // L (Script)
+            0x1D4A9 => 0x2133, // M (Script)
+            0x1D4AC => 0x211B, // R (Script)
+            0x1D4AE => 0x2124, // Z (Double-struck)
+            _ => cp
+        };
+    }
+    /// <summary>
+    /// 文字装飾のスタイルを指定するための列挙型
+    /// </summary>
+    public enum TextStyle
+    {
+        Default,
+        Monospace,    // 𝚘 𝚘
+        DoubleStruck, // 𝕠 𝕠
+        BoldSans,     // 𝗼 𝗼
+        Script,       // ℴ ℴ
+        BoldItalic,   // 𝑨 𝑩 𝑪 (今回の本命！)
+        Typewriter,   // 𝚠 𝚠
+        Circled,      // Ⓐ Ⓑ Ⓒ
+        CrossedOut    // o͓̽ o͓̽
+    }
+    public static List<char> SpecialCharcters = [
             //"🌐", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
             //"↕️", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
             '✿',
