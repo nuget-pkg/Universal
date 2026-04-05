@@ -1,58 +1,54 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>Library</OutputType>
-		<IsPackable>true</IsPackable>
-		<LangVersion>latest</LangVersion>
-		<TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-		<Version>2026.0405.1310.40</Version>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>disable</ImplicitUsings>
-		<Title>Universal Library</Title>
-		<PackageId>Universal</PackageId>
-		<RootNamespace>Universal</RootNamespace>
-		<Product>Universal</Product>
-		<Description>Universal Library</Description>
-		<PackageProjectUrl>https://github.com/nuget-pkg/Universal</PackageProjectUrl>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-		<WarningsAsErrors>nullable</WarningsAsErrors>
-		<!--<NoWarn></NoWarn>-->
-		<!--<PackageTags>json;parser</PackageTags>-->
-		<Authors>JavaCommons</Authors>
-		<Company>JavaCommons Technologies</Company>
-		<Copyright>Copyright © JavaCommons Technologies 2026</Copyright>
-		<NeutralLanguage>en-US</NeutralLanguage>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<PackageReadmeFile>.\README.md</PackageReadmeFile>
-	</PropertyGroup>
-	<PropertyGroup>
-		<!-- https://gemini.google.com/share/62f63a243809 -->
-		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-		<DebugType>full</DebugType>
-		<!--
-        <DebugType>portable</DebugType>
-        -->
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="System.IO.Compression" />
-		<Reference Include="System.Linq" />
-		<Reference Include="System.Net.Http" />
-		<Reference Include="System.Web" />
-		<Reference Include="System.Xml" />
-		<Reference Include="System.Xml.Linq" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include=".\README.md" Pack="true" PackagePath="" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
-	</ItemGroup>
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <IsPackable>true</IsPackable>
+    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
+    <Version>2026.405.1613.5</Version>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Title>Universal Library</Title>
+    <PackageId>Universal</PackageId>
+    <RootNamespace>Universal</RootNamespace>
+    <Product>Universal</Product>
+    <Description>Universal Library</Description>
+    <PackageProjectUrl>https://github.com/nuget-pkg/Universal</PackageProjectUrl>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <!--<NoWarn></NoWarn>-->
+    <!--<PackageTags>json;parser</PackageTags>-->
+    <Authors>JavaCommons and ❝Gemini (Google Large Language Model)❞</Authors>
+    <Company>JavaCommons Technologies</Company>
+    <Copyright>Copyright ©❝Gemini (Google Large Language Model)❞ 2026</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReadmeFile>.\README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <DebugType>full</DebugType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+  </ItemGroup>
 </Project>

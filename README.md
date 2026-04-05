@@ -25,5 +25,5 @@
 NuGet Package Manager コンソールから簡単にインストールできます。
 
 ```bash
-dotnet add package Universal --version 2026.405.1608.45
+dotnet add package Universal --version 2026.405.1613.5
 ```
