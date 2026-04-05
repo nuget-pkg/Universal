@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+////using System.Text;
+// ReSharper disable RedundantCast
+// ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 
-#if NET8_0_OR_GREATER
-using System.Text;
-#endif
+// #if NET8_0_OR_GREATER
+// using System.Text;
+// #endif
 
 namespace Universal
 {
-    public class UniversalEncoding
+    public static class UniversalEncoding
     {
         public static byte[] ConvertSegmentToArray(ArraySegment<byte> segment)
         {
-            if (segment.Count == 0) return new byte[0];
+            if (segment.Count == 0) return [];
             byte[] result = new byte[segment.Count];
 #if NET8_0_OR_GREATER
             segment.AsSpan().CopyTo(result);
@@ -24,13 +27,13 @@ namespace Universal
 
         public static byte[] ParseStringIntoUtf32Characters(string s)
         {
-            if (string.IsNullOrEmpty(s)) return new byte[0];
+            if (string.IsNullOrEmpty(s)) return [];
             return new UTF32Encoding(false, false).GetBytes(s);
         }
 
         public static uint[] ToCodePoints(string s)
         {
-            if (string.IsNullOrEmpty(s)) return new uint[0];
+            if (string.IsNullOrEmpty(s)) return [];
 
 #if NET8_0_OR_GREATER
             // .NET 8+: System.Text.Rune を使用した超高速列挙

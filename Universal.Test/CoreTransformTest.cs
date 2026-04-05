@@ -1,3 +1,5 @@
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+#pragma warning disable CS0652 // 整数定数への比較は無意味です。定数が型の範囲外です
 namespace Universal_Test;
 
 using Universal;
@@ -29,10 +31,10 @@ public class CoreTransformTest
         Line();
         
         string original = "🌐Hello, World!?🌐⁅EMOJI⁆◉▶▸⸝↪️↩️➠✅🈂️❓❗𝑪𝒉𝒆𝒄𝒌";
-        string transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original);
+        string transformed = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(original);
         Echo(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果");
         AssertIdentical(actual: transformed, expected: @"🌐𝑯𝒆𝒍𝒍𝒐, 𝑾𝒐𝒓𝒍𝒅!?🌐⁅𝑬𝑴𝑶𝑱𝑰⁆◉▶▸⸝↪️↩️➠✅🈂️❓❗𝑪𝒉𝒆𝒄𝒌");
-        transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original,autoUpcase: true);
+        transformed = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(original,autoUpcase: true);
         Echo(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果 (全大文字化)");
         AssertIdentical(actual: transformed, expected: @"🌐𝑯𝑬𝑳𝑳𝑶, 𝑾𝑶𝑹𝑳𝑫!?🌐⁅𝑬𝑴𝑶𝑱𝑰⁆◉▶▸⸝↪️↩️➠✅🈂️❓❗𝑪𝒉𝒆𝒄𝒌");
 
@@ -60,7 +62,7 @@ public class CoreTransformTest
         string original = "Hello World 123";
         
         // 1. AssertTrue / AssertFalse の活用
-        string transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original);
+        string transformed = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(original);
         AssertTrue(transformed.Contains("𝑯"), "変換後の文字列に特定のグリフが含まれていること");
         AssertFalse(transformed.Contains("H"), "元のASCII大文字が残っていないこと");
 
@@ -102,7 +104,7 @@ public class CoreTransformTest
         Line();
         
         string emojiOnly = "🌐🔥";
-        string result = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(emojiOnly);
+        string result = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(emojiOnly);
 
         // 6. AssertNotIdentical
         // 絵文字は変換対象外であるはずなので、変換前後で「変わっていないこと」をあえて確認

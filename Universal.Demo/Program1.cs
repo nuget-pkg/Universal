@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime;
 using System.Text;
+// ReSharper disable HeuristicUnreachableCode
 namespace Universal.Demo;
 
 using static Core.CoreObject;
-using static Global.HyperOperatingSystem;
 public static class Program1
 {
     public static void Main(string[] args)
@@ -19,9 +16,9 @@ public static class Program1
 
             //⁅記号⁆◉▶▸⸝↪️ ↩️ ℴ𝓬➺➢ᰔ  ヾ➠✅🈂️❓❗＼／：＊“≪≫￤；‘｀＃％＄＆＾～￤﴾﴿⁅⁆【】≪≫＋ー＊＝⚽ 𝑪𝒉𝒆𝒄𝒌 🌐🪩
             string original = "🌐Hello, World!?🌐⁅EMOJI⁆◉▶▸⸝↪️↩️➠✅🈂️❓❗𝑪𝒉𝒆𝒄𝒌";
-            string transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original);
+            string transformed = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(original);
             Log(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果");
-            transformed = UniversalTransformer.GeminiSuperSerifBoldItalicTransform(original,autoUpcase: true);
+            transformed = GeminiSuperTransformer.GeminiSuperSerifBoldItalicTransform(original,autoUpcase: true);
             Log(transformed, title: "Gemini Super Serif Bold Italic 風に変換した結果 (全大文字化)");
 
             // 1. 文字列を爆破（Code Point化）
@@ -41,11 +38,11 @@ public static class Program1
 
             string fname =
                 """[1080p]✅👀🫧💻🌐`within backticks`<xml>aaa</xml>;{Title}!?x=(11+22-33)*11/2;,(🔥引火帝国🔥):"name1"'name2'?.txt""";
-            Log(UniversalTransformer.SafeFileName(fname, prettyQuotesPairs: true),
+            Log(GeminiSuperTransformer.SafeFileName(fname, prettyQuotesPairs: true),
                 "adjusted file name");
-            Log(UniversalTransformer.SafeFileName(fname, prettyQuotesPairs: true, replaceSurrogate: ""),
+            Log(GeminiSuperTransformer.SafeFileName(fname, prettyQuotesPairs: true, replaceSurrogate: ""),
                 "adjusted file name (keeping surrogate pairs)");
-            Log(UniversalTransformer.SafeFileName(fname, prettyQuotesPairs: true, replaceSurrogate: "@"),
+            Log(GeminiSuperTransformer.SafeFileName(fname, prettyQuotesPairs: true, replaceSurrogate: "@"),
                 "adjusted file name (specifying surrogate pairs' replacement)");
             string code =
                 """
@@ -70,21 +67,21 @@ public static class Program1
                     }
                 }
                 """;
-            string safeCode1 = UniversalTransformer.SafeSourceCode(code); // [DEFAULT] unicodeEacape: true
+            string safeCode1 = GeminiSuperTransformer.SafeSourceCode(code); // [DEFAULT] unicodeEacape: true
             // string
-            //     safeCode2 = UniversalTransformer.SafeSourceCode(code,
+            //     safeCode2 = GeminiSuperTransformer.SafeSourceCode(code,
             //         unicodeEacape: false); // DON'T USE `unicodeEacape: false` if you have PLAN OF RESTORING!
             // //Log(safeCode2, "safeCode2");
-            // string safeCode3 = UniversalTransformer.SafeSourceCode(code, asSingleLine: true);
+            // string safeCode3 = GeminiSuperTransformer.SafeSourceCode(code, asSingleLine: true);
             // //Log(safeCode3, "safeCode3");
-            string restoredCode1 = UniversalTransformer.RestoreSourceCode(safeCode1);
-            //string restoredCode2 = UniversalTransformer.RestoreSourceCode(safeCode2);
-            //string restoredCode3 = UniversalTransformer.RestoreSourceCode(safeCode3);
+            string restoredCode1 = GeminiSuperTransformer.RestoreSourceCode(safeCode1);
+            //string restoredCode2 = GeminiSuperTransformer.RestoreSourceCode(safeCode2);
+            //string restoredCode3 = GeminiSuperTransformer.RestoreSourceCode(safeCode3);
             Log(restoredCode1, "restoredCode1");
             //Log(restoredCode2, "restoredCode2");
             //Log(restoredCode3, "restoredCode3");
 
-            string xxx = UniversalTransformer.SafeSourceCode("𝓃𝓅");
+            string xxx = GeminiSuperTransformer.SafeSourceCode("𝓃𝓅");
             Log(xxx);
 
             UTF32Encoding utf32Encoding = new UTF32Encoding();
