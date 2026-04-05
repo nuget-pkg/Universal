@@ -6,13 +6,13 @@ cwd=`pwd`
 ts=`date "+%Y.%m%d.%H%M.%S"`
 ver=$(echo $ts | sed -e "s/[.]0/./g")
 
-sed -e "s/﴾VERSION﴿/${ver}/g" README.template.md>README.md
-cp -pv README.md $name/
-
 current=$(cd $(dirname $0);pwd)
 echo $current
 name=`echo "$current" | sed -e 's/.*\/\([^\/]*\)$/\1/'`
 echo $name
+
+sed -e "s/﴾VERSION﴿/${ver}/g" README.template.md>README.md
+cp -pv README.md $name/
 
 cd $cwd/$name
 sed -i -e "s/<Version>.*<\/Version>/<Version>${ver}<\/Version>/g" $name.csproj
