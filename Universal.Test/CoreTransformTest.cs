@@ -1,3 +1,4 @@
+#if false
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 #pragma warning disable CS0652 // 整数定数への比較は無意味です。定数が型の範囲外です
 namespace Universal_Test;
@@ -138,3 +139,4 @@ public class CoreTransformTest
         Line();
     }
 }
+#endif

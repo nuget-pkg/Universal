@@ -1,10 +1,11 @@
 using System;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 // ReSharper disable HeuristicUnreachableCode
 namespace Universal.Demo;
 
-using static Core.CoreObject;
+using static Global.EasyObject;
 public static class Program1
 {
     public static void Main(string[] args)
@@ -30,12 +31,11 @@ public static class Program1
             string result = UniversalEncoding.FromCodePoints(filteredPoints);
             Log(result, title: "数字を除去して復元した結果");
             // 出力期待値: "𝓐𝓑𝓒  𝔁𝔂𝔃" (サロゲートペアも壊れずに残る！)
-            return;
 
             var exploded = UniversalEncoding.ToCodePoints("𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩 𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃");
             Log(exploded, title: "Code points of the string");
-            return;
 
+            
             string fname =
                 """[1080p]✅👀🫧💻🌐`within backticks`<xml>aaa</xml>;{Title}!?x=(11+22-33)*11/2;,(🔥引火帝国🔥):"name1"'name2'?.txt""";
             Log(GeminiSuperTransformer.SafeFileName(fname, prettyQuotesPairs: true),
