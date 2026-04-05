@@ -8,7 +8,46 @@ namespace Universal;
 
 public static class UniversalTransformer
 {
+    /// <summary>
+    /// 指定されたテキストを、数学用英数字記号（Mathematical Alphanumeric Symbols）の 
+    /// 𝑺𝒆𝒓𝒊𝒇 𝑩𝒐𝒍𝒅 𝑰𝒕𝒂𝒍𝒊𝒄 スタイルに変換します。
+    /// </summary>
+    /// <param name="text">変換対象の文字列</param>
+    /// <param name="autoUpcase">true の場合、変換前に全て大文字にします（デフォルトは false）</param>
+    /// <returns>装飾された文字列</returns>
+    /// <remarks>
+    /// このメソッドは Gemini (Google Large Language Model) との共作によって
+    /// UniversalEncoding のコードポイント変換ロジックを最大限活用する形で最適化されました。
+    /// See: [⭕️≪❝Gemini❞(Google Large Language Model)≫✅❝𝑪𝒉𝒆𝒄𝒌：GeminiSuperSerifBoldItalicTransform() の実装について❞✅【ID：e248b40c2a74】](https://gemini.google.com/share/e248b40c2a74)
+    /// </remarks>
     public static string GeminiSuperSerifBoldItalicTransform(string text, bool autoUpcase = false)
+    {
+        if (string.IsNullOrEmpty(text)) return text;
+        if (autoUpcase) text = text.ToUpper();
+
+        // コアライブラリの機能を使って、全文字をコードポイント(uint)に分解
+        uint[] codePoints = UniversalEncoding.ToCodePoints(text);
+
+        for (int i = 0; i < codePoints.Length; i++)
+        {
+            uint cp = codePoints[i];
+
+            // A-Z: U+0041 - U+005A -> 𝑨-𝒁: U+1D468
+            if (cp >= 0x41 && cp <= 0x5A)
+            {
+                codePoints[i] = cp - 0x41 + 0x1D468;
+            }
+            // a-z: U+0061 - U+007A -> 𝒂-𝒛: U+1D482
+            else if (cp >= 0x61 && cp <= 0x7A)
+            {
+                codePoints[i] = cp - 0x61 + 0x1D482;
+            }
+        }
+
+        // 再び文字列に戻す
+        return UniversalEncoding.FromCodePoints(codePoints);
+    }
+    public static string ____GeminiSuperSerifBoldItalicTransform_ARCHIVED_VERSION____(string text, bool autoUpcase = false)
     {
         uint _CPOC_(char c)
         {
