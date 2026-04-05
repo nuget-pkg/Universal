@@ -30,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CoreObject" Version="2026.401.2240.41" />
-    <PackageReference Include="HyperOperatingSystem" Version="2026.402.1806.57" />
+    <PackageReference Include="HyperOperatingSystem" Version="2026.405.634.54" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Universal\Universal.csproj" />
