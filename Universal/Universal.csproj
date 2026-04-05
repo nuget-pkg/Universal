@@ -4,7 +4,7 @@
     <IsPackable>true</IsPackable>
     <LangVersion>latest</LangVersion>
     <TargetFrameworks>netstandard2.0;net462;net8.0</TargetFrameworks>
-    <Version>2026.405.1613.5</Version>
+    <Version>2026.405.1627.25</Version>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <Title>Universal Library</Title>
@@ -16,7 +16,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <!--<NoWarn></NoWarn>-->
-    <!--<PackageTags>json;parser</PackageTags>-->
+    <PackageTags>universal;gemini;ai-assisted;utility;dotnet;modern-csharp</PackageTags>
     <Authors>JavaCommons and ❝Gemini (Google Large Language Model)❞</Authors>
     <Company>JavaCommons Technologies</Company>
     <Copyright>Copyright ©❝Gemini (Google Large Language Model)❞ 2026</Copyright>
