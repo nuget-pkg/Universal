@@ -8,46 +8,6 @@ namespace Universal;
 
 public static class UniversalTransformer
 {
-    public static List<char> SpecialCharcters =
-    [
-        //"🌐", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
-        //"↕️", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
-        '✿',
-        '﴾',
-        '﴿',
-        'ー',
-        'ヾ',
-        '＃',
-        '＄',
-        '％',
-        '＆',
-        '＊',
-        '＊',
-        '／',
-        '：',
-        '：',
-        '；',
-        '＼',
-        '＾',
-        '～',
-        '￤',
-        '‘',
-        '“',
-        '【',
-        '】',
-        '〘',
-        '〙',
-        '＋',
-        '＝',
-        '≪',
-        '≪',
-        '▶',
-        '◉',
-        '❓',
-        '❗',
-        '❝',
-        '❞',
-    ];
     public static string GeminiSuperSerifBoldItalicTransform(string text, bool autoUpcase = false)
     {
         uint _CPOC_(char c)
@@ -360,4 +320,44 @@ public static class UniversalTransformer
 
         return metadata;
     }
+    public static List<char> SpecialCharcters =
+    [
+        //"🌐", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
+        //"↕️", /*I WANTED TO USE THIS EMOJI...BUT LENGTH IS 2. */
+        '✿',
+        '﴾',
+        '﴿',
+        'ー',
+        'ヾ',
+        '＃',
+        '＄',
+        '％',
+        '＆',
+        '＊',
+        '＊',
+        '／',
+        '：',
+        '：',
+        '；',
+        '＼',
+        '＾',
+        '～',
+        '￤',
+        '‘',
+        '“',
+        '【',
+        '】',
+        '〘',
+        '〙',
+        '＋',
+        '＝',
+        '≪',
+        '≪',
+        '▶',
+        '◉',
+        '❓',
+        '❗',
+        '❝',
+        '❞',
+    ];
 }
