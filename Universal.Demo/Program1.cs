@@ -13,7 +13,11 @@ public static class Program1 {
 
             //     /// <param name="sampleChar">スタイルの基準となる文字（例: "𝒜", "𝔸", "𝙰"）</param>
             string a = GeminiSuperTransformer.GeminiSuperAllPurposeEmojifier(sampleChar: "𝒜", target: "ABC xyz");
+            ForceAscii = false;
             Echo(new { a });
+            ForceAscii = true;
+            Echo(new { a });
+            ClearSettings(); // !! Reset SELFISH SETTINGS !!
             return;
 
             //⁅記号⁆◉▶▸⸝↪️ ↩️ ℴ𝓬➺➢ᰔ  ヾ➠✅🈂️❓❗＼／：＊“≪≫￤；‘｀＃％＄＆＾～￤﴾﴿⁅⁆【】≪≫＋ー＊＝⚽ 𝑪𝒉𝒆𝒄𝒌 🌐🪩
